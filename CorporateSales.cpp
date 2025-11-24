@@ -45,17 +45,28 @@ double calcAverage(double total_annual_sales) {
 }
 
 void displaySalesReport(Division divList[], int num_divisions) {
+    const int NUM_COLS = 7;
+    const int COL_WIDTH = 10;
+    string header[NUM_COLS] = {"Division", "Q1", "Q2", "Q3", "Q4", "Total", "Average"};
+
     cout << endl;
     cout << "***SALES REPORT***" << endl;
+    cout << fixed << setprecision(2);
+
+    // cout << "|   Division      |    Q1      |    Q2      |    Q3      |    Q4      |    Total      |    Average    |" << endl;
+    for (int i = 0; i < NUM_COLS; i++) {
+        cout << setw(COL_WIDTH) << "|" << setw(COL_WIDTH + 3) << header[i];
+    }
+    cout << "    |" << endl;
 
     for (int i = 0; i < num_divisions; i++) {
-        cout << "Divison: " << divList[i].name << endl;
+        cout << setw(COL_WIDTH) << "|" << setw(COL_WIDTH) << divList[i].name;
         for (int y = 0; y < 4; y++) {
-            cout << "Quarter " << y + 1 << " Sales: $" << divList[i].quarter_sales[y] << endl;
+            cout << setw(COL_WIDTH) << "|" << setw(COL_WIDTH) << "$ " << divList[i].quarter_sales[y];
         }
-        cout << fixed << setprecision(2);
-        cout << "Total Annual Sales: $" << divList[i].total_annual_sales << endl;
-        cout << "Average Quarterly Sales: $" << divList[i].average_quarterly_sales << endl << endl;
+        cout << setw(COL_WIDTH) << "|" << setw(COL_WIDTH) << "$ " << divList[i].total_annual_sales;
+        cout << setw(COL_WIDTH) << "|" << setw(COL_WIDTH) << "$ " << divList[i].average_quarterly_sales;
+        cout << "    |" << endl;
     }
 }
 
