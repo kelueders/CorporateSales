@@ -130,7 +130,7 @@ int main()
                 if (n == DATA_COLS - 1) {
                     getline(file, sales);
                 } 
-                // If it's not hte last column, use the , as the delimiter
+                // If it's not the last column, use the , as the delimiter
                 else {
                     getline(file, sales, ',');
                 }
