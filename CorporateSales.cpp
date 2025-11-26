@@ -19,6 +19,7 @@ struct Division {
     double average_quarterly_sales;
 };
 
+// Function to calculate the total sales for a division
 double calcTotal(double quarter_sales[], int num_divisions) {
     double total = 0;
     for (int i = 0; i < num_divisions; i++) {
@@ -27,10 +28,12 @@ double calcTotal(double quarter_sales[], int num_divisions) {
     return total;
 }
 
+// Function to calculate the average sales for a division
 double calcAverage(double total_annual_sales, int num_divisions) {
     return total_annual_sales / num_divisions;
 }
 
+// Function to display the Sales Report
 void displaySalesReport(Division divList[], int num_divisions) {
     const int NUM_COLS = 7;
     const int COL_WIDTH = 12;
@@ -72,10 +75,12 @@ void displaySalesReport(Division divList[], int num_divisions) {
 
 int main()
 {
+    // Declare constants and create an empty array to hold the Division structs
     const int NUM_DIVISIONS = 4;
     const int DATA_COLS = 5;
     Division divList[NUM_DIVISIONS];
 
+    // Display instructions to the user
     string filename;
     cout << "***Sales Report Program***" << endl;
     cout << "This program will take in a csv file formatted as below, and return a Sales Report containing Total Earnings" << endl;
@@ -88,19 +93,25 @@ int main()
     cout << "North,300,300,300,300" << endl;
     cout << "South,400,400,400,400" << endl;
     cout << endl;
-    cout << "Enter name of file you want to extract data from: ";
+    cout << "Enter the name of the file you want to extract data from: ";
     getline(cin, filename);
 
+    // Open the file
     ifstream file(filename);
 
+    // If the file doesn't open, return an error
     if (file.fail()) {
         cout << "ERROR: Could not open file " << filename << ". Check file name and run again." << endl;
         return 0;
     }
 
+    // Establish counters to cycle through the file
     int lineNumber = 1;
     int divIndex = 0;
+    
+    // While the end of the file has not been reached, read each line of the file
     while (!file.eof()) {
+        // Ignore the header line
         if (lineNumber == 1) {
             string header;
             getline(file, header);
@@ -108,20 +119,26 @@ int main()
             continue;
         }
 
+        // Loop through the line of data
         for (int n = 0; n < DATA_COLS; n++) {
+            // Fill the name for the division
             if (n == 0) {
                 getline(file, divList[divIndex].name, ',');
             } else {
                 string sales;
+                // If it's the last column, use the getline() default of \n as delimiter
                 if (n == DATA_COLS - 1) {
                     getline(file, sales);
                 } 
+                // If it's not hte last column, use the , as the delimiter
                 else {
                     getline(file, sales, ',');
                 }
+                // Add the sales data to the struct
                 divList[divIndex].quarter_sales[n - 1] = stod(sales);
             }
         }
+        // Move to the next division
         divIndex++;
     }
 
